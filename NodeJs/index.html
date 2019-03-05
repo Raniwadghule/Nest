@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Data from MySQL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  
+  <!-- <script src="./node_modules/node.date-time/index.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> -->
+
+
+<style>
+  body {
+    margin:0;font-family:Arial
+    }
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  width: 200px;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+  
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 17px;    
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: #555;
+  color: white;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive .dropdown {float: none;}
+  .topnav.responsive .dropdown-content {position: relative;}
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.topnav .search-container {
+  float: right;
+}
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+.topnav .search-container button {
+  float: right;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
+input:invalid {
+  border: 1px solid red;
+}
+
+input:valid {
+  border: 1px solid black;
+}
+.btn {
+  float: right;
+  padding: 10px;
+  margin-top: 20px;
+  width: 100px;
+}
+
+</style>
+</head>
+<body>
+
+    <div class="topnav" id="myTopnav">
+        <a href="index.html" class="active">Home</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown 
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div> 
+
+        <div class="search-container">
+            <input type="text" id="myInputSearch" placeholder="Search by name">
+            <button type="button" onclick="getEmployee()" >Search</button>
+          </div>
+  
+      
+      </div>
+
+
+    
+  <div class="container">
+
+     
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <h1>Data is display</h1>
+      </div>
+      <div class="form-group col-md-6">
+        
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add</button>
+      </div>
+
+      <!-- <a href="insert.html" class="btn btn-info" role="button"  style="margin-left: 500px;">Add</a> -->
+    </div>
+
+    <div id="output_message"></div>
+
+    
+    <!-- <h1>Upload Image</h1>
+ 
+    <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" accept="image/*" name="photo" >
+            <input type="submit" value="upload">
+    </form>
+   -->
+    
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+  
+  
+            <div class="modal-header">
+              <h4 class="modal-title">Add Record</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="container-fluid modal-body">
+              <input  type="hidden" value="0" id="hiddenEmpId" name="EmpId" />
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <lable>Name</lable>
+              <input type="text" id="nameId" name="name" class="form-control px-3" placeholder="Enter Name" required />
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                <lable>Email</lable>
+                <input type="email" id="emailId" name="email" class="form-control px-3" placeholder="Enter Email" required/>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                  <lable>Birth Date</lable>
+                  <input type="date" id="birthdateId" name="birthdate" class="form-control px-3" required/>
+                </div>
+              </div>
+              <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <lable>Image</lable>
+                    
+                    <input type="file" id="imageId" accept="image/*" name="image" class="form-control px-3" placeholder="Please Select Image" required/>
+                    <!-- <input type="submit" value="upload"> -->
+                  </div>
+                </div>
+               
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" onclick="SaveUpdateCustomer();" >Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</form>
+</body>
+
+
+  <script>
+    function getEmployee() {
+     var searchText=document.getElementById('myInputSearch').value;
+    $.get("/getEmployeeDetails?searchText="+searchText, function (data) {
+      console.log(data);
+      var tablehtml = '<table class="table table-striped">';
+      tablehtml += '<tr>';
+      tablehtml += '<th>No</th>';
+      tablehtml += '<th>Name</th>';
+      tablehtml += '<th>Email</th>';
+      tablehtml += '<th>Birth date</th>';
+      tablehtml += '<th>Image</th>';
+      tablehtml += '<th>Age</th>';
+      tablehtml += '<th>Action</th>';
+      tablehtml += '</tr>';
+
+      $.each(data, function (key, value) {
+
+        //tablehtml += '<tr> <td>'+value.EmpId+'</td> <td>'+value.name+'</td> <td>'+value.email+'</td> <td>'+ getformatDate(value.birthdate) +'</td> <td>'+value.Image+'</td> <td> '+ calculateAge(value.birthdate) +'</td> <td> <button type="button" class="btn btn-primary" data-toggle = "modal" data-target ="#myModal" onclick = "openEmployeePopUp(this);"> Update </button> <button type="button" class="btn btn-primary" data-toggle = "modal" data-target ="#myModal" onclick = "DeleteEmployee(this);"> Delete </button> </td> </tr>'
+
+         tablehtml += ' <tr><td>' + value.EmpId + '</td><td>' + value.name + '</td><td>' + value.email + '</td><td>' + getformatDate(value.birthdate)  + '</td><td>' + value.Image + '</td><td>'+ calculateAge(value.birthdate) +'</td><td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="openEmployeePopUp(this);"> Update </button> <button type="button" class="btn btn-primary" margin:"right";data-toggle="modal" data-target="#myModal" onclick="DeleteEmployee(this);"> Delete </button> </td></tr>'
+      });
+
+      tablehtml += '</table>';
+      //  alert(tablehtml);
+      $('#output_message').html(tablehtml);
+
+    });
+  }
+
+  function getformatDate(birthdate)
+  {
+
+var formattedDate=new Date(birthdate);
+var dd = formattedDate.getDate();
+var mm = formattedDate.getMonth() + 1; //January is 0!
+
+var yyyy = formattedDate.getFullYear();
+if (dd < 10) {
+  dd = '0' + dd;
+} 
+if (mm < 10) {
+  mm = '0' + mm;
+} 
+
+return formattedDate = dd + '/' + mm + '/' + yyyy;
+
+//var formattedDate=new Date(birthdate);  
+  //  return formattedDate.dd+'-'+(formattedDate.mm+1)+'-'+formattedDate.yyyy;
+
+  }
+
+getEmployee();
+function fnSuccess(result){
+  //alert('result');
+  document.getElementById('hiddenEmpId').value = 0;
+  getEmployee();
+  $('#myModal .close').click(); 
+$("#myModal").modal('hide');
+}
+
+function SaveUpdateCustomer(){
+  var EmpId = document.getElementById('hiddenEmpId').value;
+  var name = document.getElementById('nameId').value;
+  var email = document.getElementById('emailId').value;
+var birthdate = document.getElementById('birthdateId').value;
+var Image = document.getElementById('imageId').value;
+var postObj = {};
+postObj.EmpId = EmpId
+postObj.name = name;
+postObj.email = email;
+postObj.birthdate = birthdate;
+postObj.Image = Image;
+postAjax('http://localhost:8081/InsertUpdateEmployee', postObj,fnSuccess);
+}
+function postAjax(url, data, success) {
+    var params = typeof data == 'string' ? data : Object.keys(data).map(
+      function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+    ).join('&');
+
+    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open('POST', url);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState > 3 && xhr.status == 200) { success(xhr.responseText); }
+    };
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+    return xhr;
+  }
+
+  function openEmployeePopUp(obj) {
+   var EmpId = $(obj).closest('tr').children('td:first').text();
+
+    document.getElementById('hiddenEmpId').value = EmpId;
+    document.getElementById('nameId').value = $(obj).closest('tr').children('td:nth-child(2)').text();
+    document.getElementById('emailId').value = $(obj).closest('tr').children('td:nth-child(3)').text();
+    document.getElementById('birthdateId').value = $(obj).closest('tr').children('td:nth-child(4)').text();
+    document.getElementById('imageId').value = $(obj).closest('tr').children('td:nth-child(5)').text();
+    
+  }
+
+  function DeleteEmployee(obj){
+    var EmpId = $(obj).closest('tr').children('td:first').text();
+    var postObj ={};
+    postObj.EmpId = EmpId;
+    if(confirm("Do you want to delete:" + EmpId)){
+    postAjax('http://localhost:8081/DeleteEmployee' ,postObj,fnSuccess)
+  }
+
+};
+
+function calculateAge(birthdate) {
+    var today = new Date();
+    var birthdate = new Date(birthdate);
+    var age = today.getFullYear() - birthdate.getFullYear();
+    var m = today.getMonth() - birthdate.getMonth();
+     if (m < 0 || (m === 0 && today.getDate() < birthdate.getDate())) {
+      //if (today.getDate() < birthdate.getDate()) {
+        age--;
+    }
+    return age;
+}
+
+
+
+
+// $(document).ready(function () {
+// $('#dtOrderExample').DataTable({
+// "order": [[ 3, "desc" ]]
+// });
+// $('.dataTables_length').addClass('bs-select');
+// });
+
+  </script>
+
+
+</html>
