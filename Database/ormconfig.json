@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "13.126.97.131",
+    "port": 3306,
+    "username": "admin",
+    "password": "admin",
+    "database": "employeedb",
+    "entities": ["src/**/**.entity{.ts,.js}"],
+    "synchronize": true
+  }
